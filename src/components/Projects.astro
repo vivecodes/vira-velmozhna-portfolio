@@ -1,0 +1,52 @@
+---
+import type { Lang } from "../i18n";
+import { getProjects } from "../data/projects";
+import { localizePath } from "../i18n";
+import { useTranslations } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const projects = getProjects(lang);
+const t = useTranslations(lang);
+---
+
+<section id="projects">
+  <div class="section-head">
+    <span class="tag">06</span>
+    <h2>{t("section.projects")}</h2>
+    <div class="rule"></div>
+  </div>
+
+  <ul class="projects-list">
+    {
+      projects.map((p) => {
+        const href = p.liveUrl || localizePath(lang, `/projects/${p.slug}`);
+        const external = Boolean(p.liveUrl);
+        return (
+          <li>
+            <a
+              href={href}
+              class="project-row"
+              target={external ? "_blank" : undefined}
+              rel={external ? "noreferrer" : undefined}
+            >
+              <div class="project-row-top">
+                <span class="project-row-name">{p.name}</span>
+                <span class="project-row-go">{t("projects.view")}</span>
+              </div>
+              <p class="project-row-desc">{p.description}</p>
+              <div class="project-row-tags">
+                {p.tags.map((tag) => (
+                  <span class="repo-tag">{tag}</span>
+                ))}
+              </div>
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</section>

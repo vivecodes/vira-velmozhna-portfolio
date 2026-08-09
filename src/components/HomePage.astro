@@ -1,0 +1,33 @@
+---
+import type { Lang } from "../i18n";
+import TitleBar from "./TitleBar.astro";
+import Hero from "./Hero.astro";
+import Contact from "./Contact.astro";
+import Experience from "./Experience.astro";
+import Skills from "./Skills.astro";
+import Projects from "./Projects.astro";
+import Languages from "./Languages.astro";
+import EducationSection from "./EducationSection.astro";
+import Footer from "./Footer.astro";
+import { homeTabs } from "../data/tabs";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const filename =
+  lang === "de" ? "frontend-entwicklerin.astro" : "frontend-developer.astro";
+---
+
+<TitleBar filename={filename} tabs={homeTabs(lang)} lang={lang} spy />
+<main class="wrap">
+  <Hero lang={lang} />
+  <Contact lang={lang} />
+  <Experience lang={lang} />
+  <Skills lang={lang} />
+  <Languages lang={lang} />
+  <EducationSection lang={lang} />
+  <Projects lang={lang} />
+  <Footer lang={lang} />
+</main>

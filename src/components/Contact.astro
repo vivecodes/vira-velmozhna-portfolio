@@ -1,0 +1,35 @@
+---
+import type { Lang } from "../i18n";
+import { getSite } from "../data/site";
+import { useTranslations } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const site = getSite(lang);
+const t = useTranslations(lang);
+---
+
+<section id="contact-info">
+  <div class="section-head">
+    <span class="tag">01</span>
+    <h2>{t("section.contact")}</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="contact-row">
+    <a href={`mailto:${site.email}`}>
+      <span class="icon">✉</span>
+      {site.email}
+    </a>
+    <span class="badge">
+      <span class="icon">📍</span>
+      {site.location}
+    </span>
+    <a href={site.linkedin} target="_blank" rel="noreferrer">
+      <span class="icon">🔗</span>LinkedIn
+    </a>
+  </div>
+</section>

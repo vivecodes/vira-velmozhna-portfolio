@@ -1,0 +1,37 @@
+---
+// Twinkling star field. Stars are generated on the client for a bit of
+// randomness without shipping a framework.
+---
+
+<div class="stars" aria-hidden="true"></div>
+
+<script>
+  function buildStars() {
+    const field = document.querySelector<HTMLDivElement>(".stars");
+    if (!field) return;
+    field.innerHTML = "";
+
+    const count = window.innerWidth < 640 ? 45 : 90;
+    for (let i = 0; i < count; i++) {
+      const s = document.createElement("div");
+      s.className = "star";
+      const size = (Math.random() * 2 + 1).toFixed(1);
+      const top = Math.random() * 100;
+      const left = Math.random() * 100;
+      const dur = (Math.random() * 3 + 3).toFixed(2);
+      const delay = (Math.random() * 5).toFixed(2);
+      const maxO = Math.random() * 0.5 + 0.5;
+      s.style.width = size + "px";
+      s.style.height = size + "px";
+      s.style.top = top + "%";
+      s.style.left = left + "%";
+      s.style.animationDuration = dur + "s";
+      s.style.animationDelay = "-" + delay + "s";
+      s.style.setProperty("--max-o", maxO.toFixed(2));
+      s.style.setProperty("--min-o", (maxO * 0.15).toFixed(2));
+      field.appendChild(s);
+    }
+  }
+
+  buildStars();
+</script>

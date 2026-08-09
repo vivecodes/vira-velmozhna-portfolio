@@ -1,0 +1,28 @@
+---
+import type { Lang } from "../i18n";
+import { locales, switchLocalePath } from "../i18n";
+import { useTranslations } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="lang-switch" aria-label={t("lang.switch")}>
+  {
+    locales.map((locale) => (
+      <a
+        href={switchLocalePath(currentPath, locale)}
+        class:list={[{ active: locale === lang }]}
+        hreflang={locale}
+        aria-current={locale === lang ? "true" : undefined}
+      >
+        {locale === "en" ? t("lang.en") : t("lang.de")}
+      </a>
+    ))
+  }
+</nav>

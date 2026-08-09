@@ -1,0 +1,12 @@
+---
+import ProjectDetailPage from "../../../components/ProjectDetailPage.astro";
+import { projectSlugs } from "../../../data/projects";
+
+export function getStaticPaths() {
+  return projectSlugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+---
+
+<ProjectDetailPage lang="de" slug={slug!} />

@@ -1,0 +1,50 @@
+---
+import type { Lang } from "../i18n";
+import { getExperience } from "../data/site";
+import { useTranslations } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const experience = getExperience(lang);
+const t = useTranslations(lang);
+---
+
+<section id="experience">
+  <div class="section-head">
+    <span class="tag">02</span>
+    <h2>{t("section.experience")}</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="commit-list">
+    {
+      experience.map((item) => (
+        <div class="commit">
+          <div class="commit-line">
+            <div class="commit-dot" />
+          </div>
+          <div class="commit-body">
+            <div class="commit-meta">
+              <span class="commit-hash">{item.hash}</span>
+              <span>{item.period}</span>
+              <span>{item.location}</span>
+            </div>
+            <div class="commit-role">{item.role}</div>
+            <div class="commit-org">{item.org}</div>
+            <div class="diff">
+              {item.points.map((point) => (
+                <div>
+                  <span class="plus">+</span>
+                  {point}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

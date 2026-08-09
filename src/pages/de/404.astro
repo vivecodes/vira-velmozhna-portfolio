@@ -1,0 +1,30 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import TitleBar from "../../components/TitleBar.astro";
+import { detailTabs } from "../../data/tabs";
+import { localizePath } from "../../i18n";
+import { useTranslations } from "../../i18n/ui";
+
+const lang = "de";
+const t = useTranslations(lang);
+---
+
+<Layout lang={lang} title={t("notfound.title")}>
+  <TitleBar
+    filename="404.astro"
+    tabs={detailTabs(lang)}
+    lang={lang}
+    activeId="projects"
+  />
+  <main class="wrap">
+    <div class="not-found">
+      <h1>404</h1>
+      <p class="summary" style="margin: 12px auto 24px;">
+        {t("notfound.text")}
+      </p>
+      <a href={localizePath(lang, "/#projects")} class="btn btn-primary">
+        {t("notfound.back")}
+      </a>
+    </div>
+  </main>
+</Layout>

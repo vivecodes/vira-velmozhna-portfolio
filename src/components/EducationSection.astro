@@ -1,0 +1,32 @@
+---
+import type { Lang } from "../i18n";
+import { getEducation } from "../data/site";
+import { useTranslations } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const education = getEducation(lang);
+const t = useTranslations(lang);
+---
+
+<section id="education">
+  <div class="section-head">
+    <span class="tag">05</span>
+    <h2>{t("section.education")}</h2>
+    <div class="rule"></div>
+  </div>
+
+  {
+    education.map((edu) => (
+      <div class="edu-card">
+        <div class="edu-title">{edu.title}</div>
+        <div class="edu-org">{edu.org}</div>
+        <div class="edu-meta">{edu.meta}</div>
+        <div class="edu-topics">{edu.topics}</div>
+      </div>
+    ))
+  }
+</section>

@@ -1,0 +1,23 @@
+---
+import type { Lang } from "../i18n";
+import { getSite } from "../data/site";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const site = getSite(lang);
+---
+
+<section class="hero" id="summary">
+  <div class="eyebrow">
+    <span class="prompt">const</span> role = "{site.role}";
+  </div>
+  <h1>
+    {site.name}
+    <span class="cursor">&nbsp;</span>
+  </h1>
+  <div class="role">{site.roleTagline}</div>
+  <p class="summary">{site.summary}</p>
+</section>

@@ -1,0 +1,35 @@
+---
+import type { Lang } from "../i18n";
+import { getLanguages } from "../data/site";
+import { useTranslations } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const languages = getLanguages(lang);
+const t = useTranslations(lang);
+---
+
+<section id="languages">
+  <div class="section-head">
+    <span class="tag">04</span>
+    <h2>{t("section.languages")}</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="langs">
+    {
+      languages.map((item) => (
+        <div class="lang-row">
+          <div class="lang-name">{item.name}</div>
+          <div class="lang-bar">
+            <div class="lang-bar-fill" style={`width: ${item.width}`} />
+          </div>
+          <div class="lang-level">{item.level}</div>
+        </div>
+      ))
+    }
+  </div>
+</section>

@@ -1,0 +1,140 @@
+---
+import type { Lang } from "../i18n";
+import Layout from "../layouts/Layout.astro";
+import TitleBar from "./TitleBar.astro";
+import Footer from "./Footer.astro";
+import { getProject } from "../data/projects";
+import { detailTabs } from "../data/tabs";
+import { localizePath } from "../i18n";
+import { useTranslations } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+  slug: string;
+}
+
+const { lang, slug } = Astro.props;
+const project = getProject(lang, slug);
+const t = useTranslations(lang);
+
+if (!project) {
+  throw new Error(`Unknown project slug: ${slug}`);
+}
+
+/** Groups consecutive "- " lines into a single list, everything else a paragraph. */
+type Block =
+  | { type: "ul"; items: string[] }
+  | { type: "p"; text: string };
+
+function toBlocks(lines: string[]): Block[] {
+  const blocks: Block[] = [];
+  let bullets: string[] = [];
+  const flush = () => {
+    if (bullets.length) {
+      blocks.push({ type: "ul", items: bullets });
+      bullets = [];
+    }
+  };
+  for (const line of lines) {
+    if (line.startsWith("- ")) {
+      bullets.push(line.slice(2));
+    } else {
+      flush();
+      blocks.push({ type: "p", text: line });
+    }
+  }
+  flush();
+  return blocks;
+}
+---
+
+<Layout
+  lang={lang}
+  title={`${project.name} — Vira Velmozhna`}
+  description={project.tagline}
+  ogTitle={`${project.name} — Vira Velmozhna`}
+  ogDescription={project.tagline}
+>
+  <TitleBar
+    filename={`${project.slug}.astro`}
+    tabs={detailTabs(lang)}
+    lang={lang}
+    activeId="projects"
+  />
+  <main class="wrap">
+    <a href={localizePath(lang, "/#projects")} class="back-link">
+      {t("detail.back")}
+    </a>
+
+    <header class="case-head">
+      <div class="eyebrow">
+        <span class="prompt">const</span> project = "{project.name}";
+      </div>
+      <h1 class="case-title">{project.name}</h1>
+      <p class="case-tagline">{project.tagline}</p>
+
+      <div class="repo-tags" style="margin-top: 18px;">
+        {project.tags.map((tag) => <span class="repo-tag">{tag}</span>)}
+      </div>
+
+      <div class="case-actions">
+        {
+          project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noreferrer"
+              class="btn btn-primary"
+            >
+              🔗 {t("detail.live")}
+            </a>
+          )
+        }
+        {
+          project.repoUrl && (
+            <a
+              href={project.repoUrl}
+              target="_blank"
+              rel="noreferrer"
+              class="btn"
+            >
+              💻 {t("detail.source")}
+            </a>
+          )
+        }
+      </div>
+    </header>
+
+    <article class="case-body">
+      {
+        project.screenshot && (
+          <img
+            class="case-shot"
+            src={project.screenshot}
+            alt={`${project.name} screenshot`}
+          />
+        )
+      }
+      {
+        project.caseStudy.map((section) => (
+          <section style="padding: 0; border: none;">
+            <h3>{section.heading}</h3>
+            {toBlocks(section.body).map((block) =>
+              block.type === "ul" ? (
+                <ul>
+                  {block.items.map((b) => (
+                    <li>{b}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>{block.text}</p>
+              )
+            )}
+          </section>
+        ))
+      }
+    </article>
+
+    <Footer lang={lang} />
+  </main>
+</Layout>

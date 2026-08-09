@@ -1,0 +1,37 @@
+---
+import type { Lang } from "../i18n";
+import { skillGroups } from "../data/site";
+import { useTranslations } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section id="skills">
+  <div class="section-head">
+    <span class="tag">03</span>
+    <h2>{t("section.skills")}</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="pkg">
+    <div class="pkg-key">// package.json — dependencies</div>
+    <br />
+    {
+      skillGroups.map((group) => (
+        <div class="pkg-group">
+          <div class="pkg-group-name">{group.name}</div>
+          <div class="chips">
+            {group.items.map((item) => (
+              <span class="chip">{item}</span>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

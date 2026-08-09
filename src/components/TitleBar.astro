@@ -1,0 +1,110 @@
+---
+import type { Tab } from "../data/tabs";
+import type { Lang } from "../i18n";
+import { localizePath } from "../i18n";
+import { getSite } from "../data/site";
+import { useTranslations } from "../i18n/ui";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+
+interface Props {
+  /** filename shown after the "vira-velmozhna /" path */
+  filename: string;
+  tabs: Tab[];
+  lang: Lang;
+  /** when true, tab hrefs are same-page anchors and scroll-spy is enabled */
+  spy?: boolean;
+  /** shown as active when spy is disabled (e.g. on detail pages) */
+  activeId?: string;
+}
+
+const { filename, tabs, lang, spy = false, activeId } = Astro.props;
+const initialActive = activeId ?? tabs[0]?.id ?? "";
+const homePath = localizePath(lang, "/");
+const site = getSite(lang);
+const t = useTranslations(lang);
+---
+
+<div class="titlebar" data-spy={spy ? "true" : "false"}>
+  <div class="titlebar-inner">
+    <div class="titlebar-top">
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="titlebar-actions">
+        <a href={site.cvPath} download class="cv-download">
+          {t("cv.download")}
+        </a>
+        <LanguageSwitcher lang={lang} />
+      </div>
+    </div>
+    <div class="tabname">
+      <span class="filename">vira-velmozhna</span>
+      <span>/</span>
+      <span>{filename}</span>
+      <span class="dirty">●</span>
+    </div>
+    <nav class="tabs">
+      {
+        tabs.map((t) => (
+          <a
+            href={spy ? `#${t.id}` : `${homePath}#${t.id}`}
+            class:list={[{ active: initialActive === t.id }]}
+            data-tab={t.id}
+          >
+            {t.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</div>
+
+<script>
+  // Scroll-spy: activate the last tab whose target has scrolled past the
+  // sticky titlebar. Works for nested anchors like #contact-info inside #summary.
+  const titlebar = document.querySelector<HTMLElement>(
+    '.titlebar[data-spy="true"]'
+  );
+
+  if (titlebar) {
+    const links = Array.from(
+      titlebar.querySelectorAll<HTMLAnchorElement>("nav.tabs a")
+    );
+    const targets = links
+      .map((l) => {
+        const el = document.getElementById(l.dataset.tab ?? "");
+        return el ? { id: l.dataset.tab!, el } : null;
+      })
+      .filter((t): t is { id: string; el: HTMLElement } => t !== null);
+
+    const setActive = (id: string) => {
+      links.forEach((l) =>
+        l.classList.toggle("active", l.dataset.tab === id)
+      );
+    };
+
+    const update = () => {
+      const offset = titlebar.offsetHeight + 12;
+      let current = targets[0]?.id;
+      for (const { id, el } of targets) {
+        if (el.getBoundingClientRect().top - offset <= 0) current = id;
+        else break;
+      }
+      if (current) setActive(current);
+    };
+
+    // Instant highlight on tab click (before smooth scroll finishes).
+    links.forEach((l) => {
+      l.addEventListener("click", () => {
+        const id = l.dataset.tab;
+        if (id) setActive(id);
+      });
+    });
+
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  }
+</script>
