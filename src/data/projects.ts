@@ -34,11 +34,22 @@ export interface Project {
 const shared = {
   "volunteer-coordination-app": {
     slug: "volunteer-coordination-app",
-    name: "volunteer-coordination-app",
-    tags: ["Vue.js", "Vuex", "Firebase Auth", "Realtime Database"],
+    name: "help2gether",
+    tags: [
+      "Vue.js",
+      "Vuex",
+      "Vue Router",
+      "BootstrapVue",
+      "Firebase Auth",
+      "Realtime Database",
+      "Firebase Hosting",
+      "Leaflet",
+      "OpenStreetMap",
+      "Photon",
+    ],
     language: "Vue",
     languageColor: "#41b883",
-    liveUrl: "",
+    liveUrl: "https://help2gether-a15a6.web.app/",
     repoUrl: "",
     featured: true,
   },
@@ -48,7 +59,7 @@ const shared = {
     tags: ["Angular", "RxJS", "SCSS", "Figma", "REST API"],
     language: "TypeScript",
     languageColor: "#3178c6",
-    liveUrl: "",
+    liveUrl: "https://weather-app-cfd72.web.app/",
     repoUrl: "",
     featured: true,
   },
@@ -76,22 +87,28 @@ const copy: Record<
   en: {
     "volunteer-coordination-app": {
       description:
-        "Volunteer coordination app built with Vue.js, Vuex, Firebase Authentication and Realtime Database.",
+        "Volunteer aid coordination app — browse humanitarian needs, filter by category/urgency/status, and view them on a map.",
       tagline:
-        "Built during my internship at Sigma Software — state management with Vuex and real-time data via Firebase.",
+        "Individual internship project at Sigma Software — a Vue.js SPA for managing humanitarian aid requests in one place.",
       caseStudy: [
         {
           heading: "Overview",
           body: [
-            "Built during my internship at Sigma Software as one of two frontend projects delivered in a team setting with Agile workflows and Git.",
+            "Help2Gether is a web app that helps volunteers manage humanitarian aid requests in one place — browse needs, filter by category, urgency, and status, and view them on a map. The idea came from the early months of the war in Ukraine, when people urgently needed food, clothing, and medicine.",
+            "Built as an individual internship project at Sigma Software.",
           ],
         },
         {
           heading: "What I built",
           body: [
-            "- Volunteer coordination app in Vue.js",
-            "- State management with Vuex",
-            "- Firebase Authentication and Realtime Database integration",
+            "- Product concept and UI sketches",
+            "- Vue.js SPA with Vue Router and Vuex",
+            "- UI with BootstrapVue",
+            "- Firebase Authentication (sign up, login, password reset, profiles)",
+            "- Firebase Realtime Database for creating, updating, and reading demands",
+            "- Interactive map and address search with Leaflet, OpenStreetMap, and Photon",
+            "- Public browse mode for guests (list + map) while keeping contact details (name/phone) private for logged-in users",
+            "- Deployed with Firebase Hosting",
           ],
         },
       ],
@@ -129,22 +146,28 @@ const copy: Record<
   de: {
     "volunteer-coordination-app": {
       description:
-        "App zur Koordinierung von Freiwilligen mit Vue.js, Vuex, Firebase Authentication und Realtime Database.",
+        "App zur Koordinierung humanitärer Hilfe — Bedarfe durchsuchen, nach Kategorie/Dringlichkeit/Status filtern und auf einer Karte anzeigen.",
       tagline:
-        "Im Praktikum bei Sigma Software gebaut — State Management mit Vuex und Echtzeitdaten über Firebase.",
+        "Individuelles Praktikumsprojekt bei Sigma Software — eine Vue.js-SPA zur Verwaltung humanitärer Hilfsanfragen an einem Ort.",
       caseStudy: [
         {
           heading: "Überblick",
           body: [
-            "Im Praktikum bei Sigma Software als eines von zwei Frontend-Projekten im Team entwickelt — mit agilen Arbeitsweisen und Git.",
+            "Help2Gether ist eine Web-App, die Freiwilligen hilft, humanitäre Hilfsanfragen an einem Ort zu verwalten — Bedarfe durchsuchen, nach Kategorie, Dringlichkeit und Status filtern und auf einer Karte anzeigen. Die Idee entstand in den ersten Kriegsmonaten in der Ukraine, als Menschen dringend Nahrung, Kleidung und Medikamente brauchten.",
+            "Als individuelles Praktikumsprojekt bei Sigma Software entwickelt.",
           ],
         },
         {
           heading: "Was ich gebaut habe",
           body: [
-            "- App zur Koordinierung von Freiwilligen in Vue.js",
-            "- State Management mit Vuex",
-            "- Integration von Firebase Authentication und Realtime Database",
+            "- Produktkonzept und UI-Skizzen",
+            "- Vue.js-SPA mit Vue Router und Vuex",
+            "- UI mit BootstrapVue",
+            "- Firebase Authentication (Registrierung, Login, Passwort-Reset, Profile)",
+            "- Firebase Realtime Database zum Erstellen, Aktualisieren und Lesen von Bedarfen",
+            "- Interaktive Karte und Adresssuche mit Leaflet, OpenStreetMap und Photon",
+            "- Öffentlicher Browse-Modus für Gäste (Liste + Karte), Kontaktangaben (Name/Telefon) nur für eingeloggte Nutzer",
+            "- Deployment mit Firebase Hosting",
           ],
         },
       ],

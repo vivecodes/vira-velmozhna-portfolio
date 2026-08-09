@@ -26,6 +26,7 @@ export const ui = {
 
     "cv.download": "Download CV",
     "projects.view": "view →",
+    "projects.open": "open →",
 
     "detail.back": "← projects",
     "detail.live": "Live demo",
@@ -65,6 +66,7 @@ export const ui = {
 
     "cv.download": "CV herunterladen",
     "projects.view": "ansehen →",
+    "projects.open": "öffnen →",
 
     "detail.back": "← projekte",
     "detail.live": "Live-Demo",

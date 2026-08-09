@@ -23,8 +23,11 @@ const t = useTranslations(lang);
   <ul class="projects-list">
     {
       projects.map((p) => {
-        const href = p.liveUrl || localizePath(lang, `/projects/${p.slug}`);
-        const external = Boolean(p.liveUrl);
+        // Featured projects open the case study; compact rows can go straight to live.
+        const href = p.featured
+          ? localizePath(lang, `/projects/${p.slug}`)
+          : p.liveUrl || localizePath(lang, `/projects/${p.slug}`);
+        const external = !p.featured && Boolean(p.liveUrl);
         return (
           <li>
             <a
@@ -35,7 +38,9 @@ const t = useTranslations(lang);
             >
               <div class="project-row-top">
                 <span class="project-row-name">{p.name}</span>
-                <span class="project-row-go">{t("projects.view")}</span>
+                <span class="project-row-go">
+                  {external ? t("projects.open") : t("projects.view")}
+                </span>
               </div>
               <p class="project-row-desc">{p.description}</p>
               <div class="project-row-tags">
